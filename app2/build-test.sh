@@ -1,7 +1,7 @@
 #!/bin/bash
 set -ex
 
-PROJECT_ROOT=/home/shihab/Documents/jenkins-workspace/brain-23-app2/task1/app2
+PROJECT_ROOT=/home/shihab/Documents/jenkins-workspace/brain-23-app2/app2
 
 #scan code
 sonar-scanner \
