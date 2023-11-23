@@ -122,31 +122,7 @@ Follow the on-screen instructions to install the recommended plugins and set up 
 Create a file named docker-compose.yml and add the following content to it:
 
 ````
-version: '3.7'
-services:
-  jenkins:
-    image: jenkins/jenkins:lts-jdk11
-    privileged: true
-    user: root
-    ports:
-      - 8087:8080
-      - 50000:50000
-    container_name: jenkins
-    restart: always
-    volumes:
-      - ./jenkins_home:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /usr/local/bin/docker:/usr/local/bin/docker
-    networks:
-      - app-network
 
-networks:
-  app-network:
-    driver: bridge
-    external: true
-root@shihab:/home/shihab/Documents/azure-devops/jenkins-docker# cd ..
-root@shihab:/home/shihab/Documents/azure-devops# cd sonarqube-docker
-root@shihab:/home/shihab/Documents/azure-devops/sonarqube-docker# cat docker-compose.yml 
 version: '3'
 services:
   sonarqube:
