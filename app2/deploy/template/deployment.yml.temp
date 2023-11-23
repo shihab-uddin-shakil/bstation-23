@@ -17,4 +17,11 @@ spec:
           image: shihab24/app2:{{IMAGE_TAG}}
           imagePullPolicy: Always
           ports:
-            - containerPort: 8000
+            - containerPort: 80
+          resources:
+            limits:
+              cpu: "200m"
+              memory: "500Mi"
+            requests:
+              cpu: "100m"
+              memory: "200Mi"
