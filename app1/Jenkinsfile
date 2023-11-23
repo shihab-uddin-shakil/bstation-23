@@ -10,7 +10,7 @@ pipeline {
 
                         sshagent(credentials:['4e968561-dbf8-444b-881f-529ca5b87d91']) {
                             sh '''
-                            ssh shihab@192.168.1.10 "echo "server running....""
+                            ssh -o StrictHostKeyChecking=no shihab@192.168.1.10 "echo "server running................""
                             '''
                
                         }
