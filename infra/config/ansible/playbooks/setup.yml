@@ -1,0 +1,31 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+---
+- name: Install kubeadm, kubelet, and kubectl
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - kubeadm
+    - kubelet
+    - kubectl
+  become: true
+---
+- name: Install CNI plugin (Calico, for example)
+  command: kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+  become: true
+---
+- name: Deploy Kubernetes metric server
+  kubectl:
+    command: apply
+    src: https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+  become: true
+---
+- name: Deploy Kubernetes metric server
+  kubectl:
+    command: apply
+    src: https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+  become: true
