@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel_app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+    # environment:
+    #   - APP_ENV=production
+    #   - APP_KEY=your_app_key  # Replace with your actual Laravel app key
+    ports:
+       - 9000:8000

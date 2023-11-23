@@ -1,0 +1,135 @@
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Check Connection') {
+                
+            steps {
+                script{
+
+                        sshagent(['ca00f31c-69a2-4ef5-b05f-b56f060f337f']) {
+                            sh '''
+                            ssh shihab@192.168.1.12 "echo "server running....""
+                            '''
+               
+                        }
+              
+                    }
+                   
+                }
+
+            post {
+                success {
+                       notifyDiscord("Connection success!")
+                }
+                failure {
+                     notifyDiscord("Connection failed!")
+                }
+            }
+            
+        }
+
+        stage('update code') {
+            steps {
+                script{
+
+                       sshagent(['ca00f31c-69a2-4ef5-b05f-b56f060f337f']) {
+                            sh '''
+                            ssh shihab@192.168.1.12 "
+                            cd /home/shihab/Documents/jenkins-workspace/brain-23-app2 &&
+                            sudo git reset .  && 
+                            sudo git clean -df &&
+                            sudo git stash &&
+                            sudo git pull
+                            
+                            "
+                            '''
+               
+                        }
+              
+                    }
+                   
+                }
+
+             post {
+                success {
+                       notifyDiscord("update code  success!")
+                }
+                failure {
+                     notifyDiscord("update code failed!")
+                }
+            }
+       
+        }
+ 
+        stage('build code') {
+            steps {
+                script{
+
+                       sshagent(['ca00f31c-69a2-4ef5-b05f-b56f060f337f']) {
+                            sh '''
+                            ssh shihab@192.168.1.12 "
+                                   cd /home/shihab/Documents/jenkins-workspace/brain-23-app2/app2 &&
+                                   sudo ./build-test.bash
+                            
+                            "
+                            '''
+               
+                        }
+              
+                    }
+                   
+                }
+            
+             post {
+                success {
+                       notifyDiscord("build success!")
+                }
+                failure {
+                     notifyDiscord("build failed!")
+                }
+            }
+       
+        }
+
+         stage('deploy code') {
+            steps {
+                script{
+
+                       sshagent(['ca00f31c-69a2-4ef5-b05f-b56f060f337f']) {
+                            sh '''
+                            ssh shihab@192.168.1.12 "
+                                    cd /home/shihab/Documents/jenkins-workspace/brain-23-app2/app2 &&
+                                    sudo kubectl apply -f deploy 
+                            
+                            "
+                            '''
+               
+                        }
+              
+                    }
+                   
+                }
+
+              post {
+             
+                success {
+                       notifyDiscord("deploy success!")
+                }
+                failure {
+                     notifyDiscord("deploy failed!")
+                }
+            }
+        }
+
+        
+        
+    }
+
+}
+def notifyDiscord(message) {
+    def discordWebhookUrl = 'https://discord.com/api/webhooks/1145653952562597918/b9wR-EbUYiBOOsn3jHGxq1Cg45sGiz45yfo_ASMtAXZzMmhpyvvzQCEl7EL-OBrwUXgS'
+    sh "curl -X POST -H 'Content-Type: application/json' -d '{\"content\":\"${message}\"}' ${discordWebhookUrl}"
+}
+    
