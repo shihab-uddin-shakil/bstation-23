@@ -50,7 +50,7 @@ To install the latest version, run:
 
 
 ## setup jenkins in docker
-* First  i create   network as name `` app-network `` using command `` docker create network app-network `` 
+* First  i create   network as name `` app-network `` using command `` docker network create  app-network `` 
 ### Create a Docker Compose File:
 
 Create a docker-compose.yml file in a directory of my workstation. This file will define my Jenkins service and its configuration. i can use a text editor to create and edit the file:
