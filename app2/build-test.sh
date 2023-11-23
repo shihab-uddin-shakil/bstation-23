@@ -3,6 +3,8 @@ set -ex
 
 PROJECT_ROOT=/home/shihab/Documents/jenkins-workspace/brain-23-app2/app2
 
+cd $PROJECT_ROOT
+
 #scan code
 sonar-scanner \
   -Dsonar.projectKey=app2 \
@@ -11,7 +13,7 @@ sonar-scanner \
   -Dsonar.token=sqp_dcf6ce44c5c0d3232cf82194a85d1fe742b5aa31
 
 # Build docker app2 image
-cd $PROJECT_ROOT
+
 docker build . -t app2 -f ./build/Dockerfile
 
 # Create docker image random tag number
