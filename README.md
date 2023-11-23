@@ -334,3 +334,5 @@ To ensure that my SSH host configuration is correct, i can click the "Check conn
 * run minikube as docker r mode
 ## Install Kind
 * Here i install kind
+  ## Install Trivy
+* Here i install trivy for scanning image
