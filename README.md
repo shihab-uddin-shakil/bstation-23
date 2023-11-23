@@ -356,4 +356,5 @@ To ensure that my SSH host configuration is correct, i can click the "Check conn
 
 * i install minukube as
 * run minikube as docker r mode
-
+## Install Kind
+* Here i install kind
